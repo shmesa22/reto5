@@ -62,24 +62,13 @@ class Answer
     end
 end
 
-# logica del reto
-class Challenge
-  attr_reader :user, :answer, :user_answer, :count, :check
-
-  def initialize(answer)
-    @user = ""
-    @answer = answer
-    @user_answer = ""
-    @count = 1
-    @check
-  end
-
+# vistas del reto
+class Views
   def get_user
     print "¿Cuál es tu nombre? "
-    @user = gets.chomp
   end
 
-  def welcome
+  def welcome(user)
     puts """
     Bienvenido #{user} al Reto '5 capitales de América'. En este reto te 
     preguntaremos, aleatoriamente, por la capitales de 5 países de 
@@ -89,21 +78,19 @@ class Challenge
     """
   end
 
-  def ask_question
-    puts "¿Cuál es la capital de #{@answer.get_question}?"
+  def ask_question(question)
+    puts "¿Cuál es la capital de #{question}?"
   end
 
-  def check?
-    @answer.get_answer == @user_answer
+  def answer
+    print "Respuesta: "
   end
 
-  def right_answer
+  def right_answer(count)
     puts
     puts "Correcto!"
     puts "#{count}/5"
     puts
-    @count += 1
-    @check = false
   end
 
   def wrong_answer
@@ -112,34 +99,56 @@ class Challenge
     puts
   end
 
-  def win_challenge
+  def win_challenge(user)
     puts "Felicidades #{user},"
     puts "Has completado el Reto '5 capitales de America'!"
   end
+end
+
+# logica del reto
+class Challenge
+  attr_reader :user, :answer, :user_answer, :views, :count, :check
+
+  def initialize(answer, views)
+    @user = ""
+    @answer = answer
+    @user_answer = ""
+    @views = views
+    @count = 1
+    @check
+  end
+
+  def check?
+    @answer.get_answer == @user_answer
+  end
 
   def run
-    self.get_user  
-    self.welcome
+    @views.get_user
+    @user = gets.chomp  
+    @views.welcome(@user)
     while @count <= 5
-      self.ask_question
+      @views.ask_question(@answer.get_question)
 
       @check = true
       while @check 
-        print "Respuesta: "
+        @views.answer
         @user_answer = gets.chomp.downcase
         if self.check?
-          self.right_answer
+          @views.right_answer(@count)
+          @count += 1
+          @check = false
         else
-          self.wrong_answer
+          @views.wrong_answer
         end
       end
     end
-    self.win_challenge  
+    @views.win_challenge(@user)  
   end
 end
 
 country = Country.new
 capital = Answer.new(country)
-game = Challenge.new(capital)
+views = Views.new
+game = Challenge.new(capital, views)
 
 game.run

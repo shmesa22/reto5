@@ -1,6 +1,6 @@
 Colombia,bogotá
 Venezuela,caracas
-Argentina,buenos aires 
+Argentina,buenos aires
 Brasil,brasilia
 Uruguay,montevideo
 Bolivia,la paz
