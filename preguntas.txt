@@ -1,0 +1,12 @@
+Colombia,bogotá
+Venezuela,caracas
+Argentina,buenos aires 
+Brasil,brasilia
+Uruguay,montevideo
+Bolivia,la paz
+Chile,santiago
+Ecuador,quito
+Guyana,georgetown
+Paraguay,asunción
+Peru,lima
+Suriname,paramaribo
